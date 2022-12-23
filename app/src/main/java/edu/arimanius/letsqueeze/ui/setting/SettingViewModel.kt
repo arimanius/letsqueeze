@@ -25,9 +25,9 @@ class SettingViewModel(private val settingRepository: SettingRepository) : ViewM
     }
 
     fun save(theme: Theme, difficulty: Difficulty, numQuestion: Int, categoryId: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             settingRepository.save(theme, difficulty, numQuestion, categoryId)
-            _saveResult.value = SaveResult(Setting(theme, difficulty, numQuestion, categoryId))
+            _saveResult.postValue(SaveResult(Setting(theme, difficulty, numQuestion, categoryId)))
         }
     }
 

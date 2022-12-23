@@ -20,7 +20,7 @@ class ProfileViewModel(private val profileRepository: ProfileRepository) : ViewM
     val user = profileRepository.getUser()
 
     fun save(username: String, displayName: String, phoneNumber: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             profileRepository.save(username, displayName, phoneNumber)
             _saveResult.value = SaveResult(ProfileUserView(username, displayName, phoneNumber))
         }

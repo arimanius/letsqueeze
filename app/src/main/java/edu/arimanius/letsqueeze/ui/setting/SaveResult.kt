@@ -7,5 +7,5 @@ import edu.arimanius.letsqueeze.data.entity.Setting
  */
 data class SaveResult(
     val success: Setting? = null,
-    val error: Int? = null
+    val error: Int? = null,
 )

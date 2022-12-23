@@ -51,6 +51,7 @@ class ProfileFragment : Fragment() {
 
         profileViewModel.profileFormState.observe(viewLifecycleOwner) {
             it ?: return@observe
+            saveButton.isEnabled = it.isDataValid
             it.usernameError?.let { usernameError ->
                 usernameEditText.error = getString(usernameError)
             }

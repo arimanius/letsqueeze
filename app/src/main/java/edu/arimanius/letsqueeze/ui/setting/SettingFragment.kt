@@ -1,20 +1,21 @@
 package edu.arimanius.letsqueeze.ui.setting
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import edu.arimanius.letsqueeze.data.entity.Category
 import edu.arimanius.letsqueeze.data.entity.Difficulty
 import edu.arimanius.letsqueeze.data.entity.Theme
 import edu.arimanius.letsqueeze.databinding.FragmentSettingBinding
+
 
 class SettingFragment : Fragment() {
 
@@ -78,6 +79,7 @@ class SettingFragment : Fragment() {
 
         settingViewModel.settingFormState.observe(viewLifecycleOwner) { settingFormState ->
             settingFormState ?: return@observe
+            saveButton.isEnabled = settingFormState.isDataValid
             settingFormState.numQuestionError?.let {
                 numQuestionEditText.error = getString(it)
             }
@@ -85,6 +87,7 @@ class SettingFragment : Fragment() {
 
         settingViewModel.saveResult.observe(viewLifecycleOwner) { saveResult ->
             saveResult ?: return@observe
+            loadingProgressBar.visibility = View.GONE
             if (saveResult.error != null) {
                 showSaveFailed(saveResult.error)
             }

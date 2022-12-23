@@ -5,5 +5,5 @@ package edu.arimanius.letsqueeze.ui.profile
  */
 data class SaveResult(
     val success: ProfileUserView? = null,
-    val error: Int? = null
+    val error: Int? = null,
 )
