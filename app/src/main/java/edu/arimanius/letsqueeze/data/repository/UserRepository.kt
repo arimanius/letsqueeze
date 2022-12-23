@@ -1,6 +1,8 @@
 package edu.arimanius.letsqueeze.data.repository
 
-import edu.arimanius.letsqueeze.data.dao.UserDao
+import edu.arimanius.letsqueeze.data.dao.*
+import edu.arimanius.letsqueeze.data.entity.Setting
+import edu.arimanius.letsqueeze.data.entity.User
 import edu.arimanius.letsqueeze.data.model.LoggedInUser
 import org.mindrot.jbcrypt.BCrypt
 
@@ -9,7 +11,10 @@ import org.mindrot.jbcrypt.BCrypt
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(private val userDao: UserDao) {
+class UserRepository(
+    private val userDao: UserDao,
+    private val settingDao: SettingDao,
+) {
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
@@ -26,6 +31,19 @@ class LoginRepository(private val userDao: UserDao) {
 
     fun logout() {
         user = null
+    }
+
+    suspend fun register(username: String, password: String): Result<LoggedInUser> {
+        if (userDao.exists(username)) {
+            return Result.Error(Exception("User $username already exists"))
+        }
+        val passwordHash = BCrypt.hashpw(password, BCrypt.gensalt())
+        userDao.insert(User(username, passwordHash))
+        settingDao.insert(Setting(username))
+
+        setLoggedInUser(LoggedInUser(username))
+
+        return Result.Success(user!!)
     }
 
     suspend fun login(username: String, password: String): Result<LoggedInUser> {
