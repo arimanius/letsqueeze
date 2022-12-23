@@ -11,9 +11,9 @@ interface AppPropertyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun set(property: AppProperty)
 
-    @Query("SELECT value FROM app_property WHERE `key` = :key")
+    @Query("SELECT value FROM app_properties WHERE `key` = :key")
     suspend fun get(key: String): String?
 
-    @Query("DELETE FROM app_property WHERE `key` = :key")
+    @Query("DELETE FROM app_properties WHERE `key` = :key")
     suspend fun unset(key: String)
 }

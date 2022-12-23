@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "app_property",
+    tableName = "app_properties",
 )
 data class AppProperty(
     @PrimaryKey

@@ -1,20 +1,11 @@
 package edu.arimanius.letsqueeze.data.entity
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.util.Locale
 
 @Entity(
     tableName = "settings",
-    foreignKeys = [
-        ForeignKey(
-            entity = Category::class,
-            parentColumns = ["id"],
-            childColumns = ["categoryId"],
-            onDelete = ForeignKey.SET_NULL,
-        )
-    ],
 )
 data class Setting(
     var theme: Theme = Theme.SYSTEM,

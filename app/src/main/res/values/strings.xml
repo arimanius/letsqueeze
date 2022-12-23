@@ -21,4 +21,11 @@
     <string name="label_category">Category</string>
     <string name="action_save">Save</string>
     <string name="invalid_num_question">Number of questions must be in [1, 50].</string>
+    <string name="label_username">Username</string>
+    <string name="label_display_name">Display name</string>
+    <string name="label_phone_number">Phone Number</string>
+    <string name="score">Score</string>
+    <string name="_0">0</string>
+    <string name="invalid_phone_number">Invalid phone number</string>
+    <string name="invalid_display_name">Display name should not be empty</string>
 </resources>

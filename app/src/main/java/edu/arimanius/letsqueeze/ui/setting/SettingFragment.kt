@@ -76,9 +76,7 @@ class SettingFragment : Fragment() {
         }
 
         settingViewModel.settingFormState.observe(viewLifecycleOwner) { settingFormState ->
-            if (settingFormState == null) {
-                return@observe
-            }
+            settingFormState ?: return@observe
             settingFormState.numQuestionError?.let {
                 numQuestionEditText.error = getString(it)
             }
@@ -90,10 +88,9 @@ class SettingFragment : Fragment() {
                 showSaveFailed(saveResult.error)
             }
             if (saveResult.success != null) {
-                updateUiWithSave()
+                showSaveSuccess()
             }
         }
-
 
         numQuestionEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -122,7 +119,7 @@ class SettingFragment : Fragment() {
         }
     }
 
-    private fun updateUiWithSave() {
+    private fun showSaveSuccess() {
         Toast.makeText(
             requireContext(),
             "Setting saved",
