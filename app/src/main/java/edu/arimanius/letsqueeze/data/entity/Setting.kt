@@ -13,12 +13,21 @@ import androidx.room.PrimaryKey
             childColumns = ["username"],
             onDelete = ForeignKey.CASCADE,
         ),
+        ForeignKey(
+            entity = Category::class,
+            parentColumns = ["id"],
+            childColumns = ["categoryId"],
+            onDelete = ForeignKey.SET_NULL,
+        )
     ],
 )
 data class Setting(
     @PrimaryKey
     var username: String,
     var theme: Theme = Theme.SYSTEM,
+    var difficulty: Difficulty = Difficulty.MEDIUM,
+    var numQuestion: Int = 10,
+    var categoryId: Int = 9,
 )
 
 enum class Theme {
