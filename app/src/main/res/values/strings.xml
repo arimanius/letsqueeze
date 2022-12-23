@@ -15,4 +15,10 @@
     <string name="prompt_repeat_password">Repeat password</string>
     <string name="invalid_password2">Passwords do not match</string>
     <string name="register_failed">"Register failed"</string>
+    <string name="label_theme">Theme</string>
+    <string name="label_difficulty">Difficulty</string>
+    <string name="label_num_questions"># Questions</string>
+    <string name="label_category">Category</string>
+    <string name="action_save">Save</string>
+    <string name="invalid_num_question">Number of questions must be in [1, 50].</string>
 </resources>

@@ -3,7 +3,6 @@ package edu.arimanius.letsqueeze.data.repository
 import edu.arimanius.letsqueeze.data.dao.*
 import edu.arimanius.letsqueeze.data.entity.AppProperty
 import edu.arimanius.letsqueeze.data.entity.LOGGED_IN_USER_KEY
-import edu.arimanius.letsqueeze.data.entity.Setting
 import edu.arimanius.letsqueeze.data.entity.User
 import edu.arimanius.letsqueeze.data.model.LoggedInUser
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +18,6 @@ import org.mindrot.jbcrypt.BCrypt
 class UserRepository(
     private val appPropertyDao: AppPropertyDao,
     private val userDao: UserDao,
-    private val settingDao: SettingDao,
 ) {
 
     // in-memory cache of the loggedInUser object
@@ -51,7 +49,6 @@ class UserRepository(
         }
         val passwordHash = BCrypt.hashpw(password, BCrypt.gensalt())
         userDao.insert(User(username, passwordHash))
-        settingDao.insert(Setting(username))
 
         setLoggedInUser(LoggedInUser(username))
 

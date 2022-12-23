@@ -8,7 +8,7 @@ import edu.arimanius.letsqueeze.data.entity.AppProperty
 
 @Dao
 interface AppPropertyDao {
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun set(property: AppProperty)
 
     @Query("SELECT value FROM app_property WHERE `key` = :key")

@@ -9,12 +9,6 @@ import java.util.Locale
     tableName = "settings",
     foreignKeys = [
         ForeignKey(
-            entity = User::class,
-            parentColumns = ["username"],
-            childColumns = ["username"],
-            onDelete = ForeignKey.CASCADE,
-        ),
-        ForeignKey(
             entity = Category::class,
             parentColumns = ["id"],
             childColumns = ["categoryId"],
@@ -23,22 +17,27 @@ import java.util.Locale
     ],
 )
 data class Setting(
-    @PrimaryKey
-    var id: Int = 0,
     var theme: Theme = Theme.SYSTEM,
     var difficulty: Difficulty = Difficulty.MEDIUM,
     var numQuestion: Int = 10,
     var categoryId: Int = 9,
-)
+) {
+    @PrimaryKey
+    var id: Int = 0
+}
 
 enum class Theme {
     LIGHT,
     DARK,
     SYSTEM;
 
-    fun getRepresentation(): String {
+    private fun getRepresentation(): String {
         return this.name.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
         }
+    }
+
+    override fun toString(): String {
+        return this.getRepresentation()
     }
 }

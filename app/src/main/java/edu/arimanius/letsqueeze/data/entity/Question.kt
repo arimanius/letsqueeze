@@ -47,9 +47,13 @@ enum class Difficulty {
         }
     }
 
-    fun getRepresentation(): String {
+    private fun getRepresentation(): String {
         return this.name.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
         }
+    }
+
+    override fun toString(): String {
+        return this.getRepresentation()
     }
 }

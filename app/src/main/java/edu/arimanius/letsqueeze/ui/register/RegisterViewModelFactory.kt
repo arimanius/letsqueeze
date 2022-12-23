@@ -17,8 +17,8 @@ class RegisterViewModelFactory(private val context: Context) : ViewModelProvider
         if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
             return RegisterViewModel(
                 userRepository = UserRepository(
+                    LetsQueezeDatabase.getInstance(context).appPropertyDao(),
                     LetsQueezeDatabase.getInstance(context).userDao(),
-                    LetsQueezeDatabase.getInstance(context).settingDao(),
                 )
             ) as T
         }
