@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import edu.arimanius.letsqueeze.data.converter.EnumConverter
 import edu.arimanius.letsqueeze.data.converter.TimestampConverter
+import edu.arimanius.letsqueeze.data.dao.*
 import edu.arimanius.letsqueeze.data.entity.*
 import edu.arimanius.letsqueeze.data.prepopulate.RoomCallback
 
@@ -30,6 +31,14 @@ class DifficultyConverter : EnumConverter<Difficulty>()
     TimestampConverter::class,
 )
 abstract class LetsQueezeDatabase : RoomDatabase() {
+    abstract fun userDao(): UserDao
+    abstract fun queezeDao(): QueezeDao
+    abstract fun categoryDao(): CategoryDao
+    abstract fun questionDao(): QuestionDao
+    abstract fun answerDao(): AnswerDao
+    abstract fun queezeResultDao(): QueezeResultDao
+    abstract fun selectedAnswerDao(): SelectedAnswerDao
+
     companion object {
         @Volatile
         private var instance: LetsQueezeDatabase? = null

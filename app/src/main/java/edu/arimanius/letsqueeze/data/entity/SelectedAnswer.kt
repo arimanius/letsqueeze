@@ -19,7 +19,7 @@ import java.util.Date
             entity = Answer::class,
             parentColumns = ["id"],
             childColumns = ["answerId"],
-            onDelete = ForeignKey.RESTRICT,
+            onDelete = ForeignKey.CASCADE,
         ),
     ],
     indices = [
