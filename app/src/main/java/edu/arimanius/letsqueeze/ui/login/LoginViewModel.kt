@@ -22,7 +22,7 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val result = userRepository.login(username, password)
 
             if (result is Result.Success) {

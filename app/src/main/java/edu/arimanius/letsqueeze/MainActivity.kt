@@ -12,9 +12,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupActionBarWithNavController(findNavController(R.id.fragment))
+//        setupActionBarWithNavController(findNavController(R.id.fragment))
         val setting = LetsQueezeDatabase.getInstance(application).settingDao().get()
         setting.observe(this) {
+            it ?: return@observe
             AppCompatDelegate.setDefaultNightMode(
                 when (it.theme) {
                     Theme.DARK -> AppCompatDelegate.MODE_NIGHT_YES

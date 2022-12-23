@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey
 data class User(
     var username: String,
     var passwordHash: String,
-    var displayName: String = "",
+    var displayName: String? = null,
     var phoneNumber: String = "",
     var score: Int = 0,
 ) {

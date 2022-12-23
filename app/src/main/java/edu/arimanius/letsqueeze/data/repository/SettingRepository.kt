@@ -20,7 +20,7 @@ class SettingRepository(
 ) {
 
     fun getCategories(): LiveData<List<Category>> {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val categories = OpenTDBClient.getClient().getService().getCategories().await()
             for (category in categories.categories) {
                 categoryDao.insert(Category(category.id, category.name))

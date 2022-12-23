@@ -59,6 +59,7 @@ class SettingFragment : Fragment() {
         )
 
         settingViewModel.setting.observe(viewLifecycleOwner) { setting ->
+            setting ?: return@observe
             themeSpinner.setSelection(setting.theme.ordinal)
             difficultySpinner.setSelection(setting.difficulty.ordinal)
             numQuestionEditText.setText(setting.numQuestion.toString())

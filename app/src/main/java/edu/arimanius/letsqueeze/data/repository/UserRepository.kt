@@ -50,9 +50,7 @@ class UserRepository(
         val passwordHash = BCrypt.hashpw(password, BCrypt.gensalt())
         val id = userDao.insert(User(username, passwordHash))
 
-        setLoggedInUser(LoggedInUser(id.toInt(), username))
-
-        return Result.Success(user!!)
+        return Result.Success(LoggedInUser(id.toInt(), username))
     }
 
     suspend fun login(username: String, password: String): Result<LoggedInUser> {

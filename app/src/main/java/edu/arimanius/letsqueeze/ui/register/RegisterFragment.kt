@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import edu.arimanius.letsqueeze.databinding.FragmentRegisterBinding
 
 import edu.arimanius.letsqueeze.R
@@ -76,6 +77,7 @@ class RegisterFragment : Fragment() {
                 }
                 registerResultResult.success?.let {
                     updateUiWithUser(it)
+                    findNavController().navigate(R.id.loginFragment)
                 }
             })
 
@@ -119,7 +121,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome) + model.displayName
+        val welcome = "User ${model.displayName} created successfully!"
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
     }
