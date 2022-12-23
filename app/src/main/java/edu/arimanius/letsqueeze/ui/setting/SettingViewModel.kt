@@ -31,8 +31,10 @@ class SettingViewModel(private val settingRepository: SettingRepository) : ViewM
         }
     }
 
-    fun numQuestionChanged(numQuestion: Int) {
-        if (!isNumQuestionValid(numQuestion)) {
+    fun numQuestionChanged(numQuestion: String) {
+        if (numQuestion.isBlank()) {
+            _settingForm.value = SettingFormState(numQuestionError = R.string.blank_num_question)
+        } else if (!isNumQuestionValid(numQuestion.toInt())) {
             _settingForm.value = SettingFormState(numQuestionError = R.string.invalid_num_question)
         } else {
             _settingForm.value = SettingFormState(isDataValid = true)

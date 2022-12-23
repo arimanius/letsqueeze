@@ -104,7 +104,7 @@ class SettingFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable) {
                 settingViewModel.numQuestionChanged(
-                    numQuestionEditText.text.toString().toInt(),
+                    numQuestionEditText.text.toString(),
                 )
             }
         })
