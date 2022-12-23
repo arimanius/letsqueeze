@@ -1,9 +1,14 @@
 package edu.arimanius.letsqueeze.data.repository
 
 import edu.arimanius.letsqueeze.data.dao.*
+import edu.arimanius.letsqueeze.data.entity.AppProperty
+import edu.arimanius.letsqueeze.data.entity.LOGGED_IN_USER_KEY
 import edu.arimanius.letsqueeze.data.entity.Setting
 import edu.arimanius.letsqueeze.data.entity.User
 import edu.arimanius.letsqueeze.data.model.LoggedInUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
 
 /**
@@ -12,6 +17,7 @@ import org.mindrot.jbcrypt.BCrypt
  */
 
 class UserRepository(
+    private val appPropertyDao: AppPropertyDao,
     private val userDao: UserDao,
     private val settingDao: SettingDao,
 ) {
@@ -26,11 +32,17 @@ class UserRepository(
     init {
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
-        user = null
+        CoroutineScope(Dispatchers.IO).launch {
+            user = appPropertyDao
+                .get(LOGGED_IN_USER_KEY)
+                ?.let { userDao.getUserByUsername(it) }
+                ?.let { LoggedInUser(it.username, it.displayName) }
+        }
     }
 
-    fun logout() {
+    suspend fun logout() {
         user = null
+        appPropertyDao.unset(LOGGED_IN_USER_KEY)
     }
 
     suspend fun register(username: String, password: String): Result<LoggedInUser> {
@@ -58,9 +70,8 @@ class UserRepository(
         return Result.Success(this.user!!)
     }
 
-    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
+    private suspend fun setLoggedInUser(loggedInUser: LoggedInUser) {
+        user = loggedInUser
+        appPropertyDao.set(AppProperty(LOGGED_IN_USER_KEY, loggedInUser.username))
     }
 }
