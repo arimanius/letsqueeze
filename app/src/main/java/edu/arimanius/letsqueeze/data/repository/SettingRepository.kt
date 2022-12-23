@@ -33,7 +33,7 @@ class SettingRepository(
         return settingDao.get()
     }
 
-    fun getCategoryById(id: Int): LiveData<Category?> {
+    fun getCategoryById(id: Int): LiveData<Category> {
         return categoryDao.getCategoryById(id)
     }
 

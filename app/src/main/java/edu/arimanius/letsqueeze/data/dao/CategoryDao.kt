@@ -16,5 +16,5 @@ interface CategoryDao: InsertableDao<Category> {
     fun getCategories(): LiveData<List<Category>>
 
     @Query("SELECT * FROM categories WHERE id = :id")
-    fun getCategoryById(id: Int): LiveData<Category?>
+    fun getCategoryById(id: Int): LiveData<Category>
 }

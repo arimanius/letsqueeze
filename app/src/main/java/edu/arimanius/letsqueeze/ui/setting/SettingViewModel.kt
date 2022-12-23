@@ -20,7 +20,7 @@ class SettingViewModel(private val settingRepository: SettingRepository) : ViewM
     val setting = settingRepository.getSetting()
     val categories = settingRepository.getCategories()
 
-    fun getCategoryById(id: Int): LiveData<Category?> {
+    fun getCategoryById(id: Int): LiveData<Category> {
         return settingRepository.getCategoryById(id)
     }
 
