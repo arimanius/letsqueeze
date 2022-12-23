@@ -1,5 +1,6 @@
 package edu.arimanius.letsqueeze.data.http
 
+import edu.arimanius.letsqueeze.data.http.dto.GetCategoriesResponse
 import edu.arimanius.letsqueeze.data.http.dto.GetQuestionsResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -13,4 +14,7 @@ interface OpenTDBService {
         @Query("difficulty") difficulty: String,
         @Query("type") type: String = "multiple"
     ): Call<GetQuestionsResponse>
+
+    @GET("api_category.php")
+    fun getCategories(): Call<GetCategoriesResponse>
 }
