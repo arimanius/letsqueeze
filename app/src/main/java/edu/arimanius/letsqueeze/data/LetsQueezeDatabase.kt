@@ -15,6 +15,7 @@ class ThemeConverter : EnumConverter<Theme>()
 
 @Database(
     entities = [
+        AppProperty::class,
         User::class,
         Setting::class,
         Queeze::class,
@@ -33,6 +34,7 @@ class ThemeConverter : EnumConverter<Theme>()
     ThemeConverter::class,
 )
 abstract class LetsQueezeDatabase : RoomDatabase() {
+    abstract fun appPropertyDao(): AppPropertyDao
     abstract fun userDao(): UserDao
     abstract fun settingDao(): SettingDao
     abstract fun queezeDao(): QueezeDao
