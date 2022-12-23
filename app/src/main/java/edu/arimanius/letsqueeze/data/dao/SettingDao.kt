@@ -10,7 +10,7 @@ import edu.arimanius.letsqueeze.data.entity.Setting
 @Dao
 interface SettingDao : InsertableDao<Setting> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    override suspend fun insert(entity: Setting)
+    override suspend fun insert(entity: Setting): Long
 
     @Query("SELECT * FROM settings")
     fun get(): LiveData<Setting>

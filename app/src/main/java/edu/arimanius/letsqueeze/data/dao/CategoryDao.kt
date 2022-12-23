@@ -10,7 +10,7 @@ import edu.arimanius.letsqueeze.data.entity.Category
 @Dao
 interface CategoryDao: InsertableDao<Category> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    override suspend fun insert(entity: Category)
+    override suspend fun insert(entity: Category): Long
 
     @Query("SELECT * FROM categories")
     fun getCategories(): LiveData<List<Category>>

@@ -33,8 +33,8 @@ class UserRepository(
         CoroutineScope(Dispatchers.IO).launch {
             user = appPropertyDao
                 .get(LOGGED_IN_USER_KEY)
-                ?.let { userDao.getUserByUsername(it) }
-                ?.let { LoggedInUser(it.username, it.displayName) }
+                ?.let { userDao.getUserById(it.toInt()) }
+                ?.let { LoggedInUser(it.id, it.username, it.displayName) }
         }
     }
 
@@ -48,9 +48,9 @@ class UserRepository(
             return Result.Error(Exception("User $username already exists"))
         }
         val passwordHash = BCrypt.hashpw(password, BCrypt.gensalt())
-        userDao.insert(User(username, passwordHash))
+        val id = userDao.insert(User(username, passwordHash))
 
-        setLoggedInUser(LoggedInUser(username))
+        setLoggedInUser(LoggedInUser(id.toInt(), username))
 
         return Result.Success(user!!)
     }
@@ -62,13 +62,13 @@ class UserRepository(
         if (!BCrypt.checkpw(password, user.passwordHash)) {
             return Result.Error(Exception("Wrong password!"))
         }
-        setLoggedInUser(LoggedInUser(user.username, user.displayName))
+        setLoggedInUser(LoggedInUser(user.id, user.username, user.displayName))
 
         return Result.Success(this.user!!)
     }
 
     private suspend fun setLoggedInUser(loggedInUser: LoggedInUser) {
         user = loggedInUser
-        appPropertyDao.set(AppProperty(LOGGED_IN_USER_KEY, loggedInUser.username))
+        appPropertyDao.set(AppProperty(LOGGED_IN_USER_KEY, loggedInUser.userId.toString()))
     }
 }
