@@ -12,10 +12,12 @@ import edu.arimanius.letsqueeze.data.entity.*
 import edu.arimanius.letsqueeze.data.prepopulate.RoomCallback
 
 class DifficultyConverter : EnumConverter<Difficulty>()
+class ThemeConverter : EnumConverter<Theme>()
 
 @Database(
     entities = [
         User::class,
+        Setting::class,
         Queeze::class,
         Category::class,
         Question::class,
@@ -29,9 +31,11 @@ class DifficultyConverter : EnumConverter<Difficulty>()
 @TypeConverters(
     DifficultyConverter::class,
     TimestampConverter::class,
+    ThemeConverter::class,
 )
 abstract class LetsQueezeDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun settingDao(): SettingDao
     abstract fun queezeDao(): QueezeDao
     abstract fun categoryDao(): CategoryDao
     abstract fun questionDao(): QuestionDao
