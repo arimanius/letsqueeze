@@ -52,7 +52,7 @@ abstract class LetsQueezeDatabase : RoomDatabase() {
                 instance ?: Room.databaseBuilder(
                     context.applicationContext,
                     LetsQueezeDatabase::class.java,
-                    "inator_database"
+                    "letsqueeze_database"
                 ).addCallback(RoomCallback(context)).build().also { instance = it }
             }
         }
