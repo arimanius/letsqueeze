@@ -9,7 +9,6 @@ import edu.arimanius.letsqueeze.data.converter.EnumConverter
 import edu.arimanius.letsqueeze.data.converter.TimestampConverter
 import edu.arimanius.letsqueeze.data.dao.*
 import edu.arimanius.letsqueeze.data.entity.*
-import edu.arimanius.letsqueeze.data.prepopulate.RoomCallback
 
 class DifficultyConverter : EnumConverter<Difficulty>()
 class ThemeConverter : EnumConverter<Theme>()
@@ -53,7 +52,7 @@ abstract class LetsQueezeDatabase : RoomDatabase() {
                     context.applicationContext,
                     LetsQueezeDatabase::class.java,
                     "letsqueeze_database"
-                ).addCallback(RoomCallback(context)).build().also { instance = it }
+                ).build().also { instance = it }
             }
         }
     }
