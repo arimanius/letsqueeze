@@ -1,4 +1,4 @@
-package edu.arimanius.letsqueeze.ui.login
+package edu.arimanius.letsqueeze.ui.register
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -10,12 +10,12 @@ import edu.arimanius.letsqueeze.data.repository.UserRepository
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
-class LoginViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class RegisterViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(
+        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
+            return RegisterViewModel(
                 userRepository = UserRepository(
                     LetsQueezeDatabase.getInstance(context).userDao(),
                     LetsQueezeDatabase.getInstance(context).settingDao(),

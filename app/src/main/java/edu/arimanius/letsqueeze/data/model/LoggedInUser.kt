@@ -5,5 +5,5 @@ package edu.arimanius.letsqueeze.data.model
  */
 data class LoggedInUser(
     val username: String,
-    val displayName: String,
+    val displayName: String? = null,
 )

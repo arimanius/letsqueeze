@@ -10,7 +10,7 @@ data class User(
     @PrimaryKey
     var username: String,
     var passwordHash: String,
-    var displayName: String,
-    var phoneNumber: String,
-    var score: Int,
+    var displayName: String = "",
+    var phoneNumber: String = "",
+    var score: Int = 0,
 )
