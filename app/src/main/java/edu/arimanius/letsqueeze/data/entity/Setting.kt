@@ -3,6 +3,7 @@ package edu.arimanius.letsqueeze.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.util.Locale
 
 @Entity(
     tableName = "settings",
@@ -23,7 +24,7 @@ import androidx.room.PrimaryKey
 )
 data class Setting(
     @PrimaryKey
-    var username: String,
+    var id: Int = 0,
     var theme: Theme = Theme.SYSTEM,
     var difficulty: Difficulty = Difficulty.MEDIUM,
     var numQuestion: Int = 10,
@@ -33,5 +34,11 @@ data class Setting(
 enum class Theme {
     LIGHT,
     DARK,
-    SYSTEM
+    SYSTEM;
+
+    fun getRepresentation(): String {
+        return this.name.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+        }
+    }
 }
