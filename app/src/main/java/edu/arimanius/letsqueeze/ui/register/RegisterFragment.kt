@@ -77,7 +77,7 @@ class RegisterFragment : Fragment() {
                 }
                 registerResultResult.success?.let {
                     updateUiWithUser(it)
-                    findNavController().navigate(R.id.loginFragment)
+                    findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                 }
             })
 
