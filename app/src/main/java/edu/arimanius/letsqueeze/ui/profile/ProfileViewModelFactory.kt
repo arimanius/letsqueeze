@@ -6,10 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import edu.arimanius.letsqueeze.data.LetsQueezeDatabase
 import edu.arimanius.letsqueeze.data.repository.ProfileRepository
 
-/**
- * ViewModel provider factory to instantiate LoginViewModel.
- * Required given LoginViewModel has a non-empty constructor
- */
 class ProfileViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

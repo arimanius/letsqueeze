@@ -4,6 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class GetQuestionsResponse(
     @JsonProperty("response_code")
-    val responseCode: Int,
+    val responseCode: Int = 0,
     val results: List<QuestionResponse>
 )

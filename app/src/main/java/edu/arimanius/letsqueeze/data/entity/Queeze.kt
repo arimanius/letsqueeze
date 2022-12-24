@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
         ),
     ],
     indices = [
-        Index(value = ["username"])
+        Index(value = ["userId"])
     ]
 )
 data class Queeze(

@@ -49,4 +49,9 @@ class QuestionListAdapter(val context: Context) :
     override fun getItemCount(): Int {
         return questionList.size
     }
+
+    fun setQuestions(questions: List<QuestionWithAnswers>) {
+        questionList = questions
+        notifyDataSetChanged()
+    }
 }

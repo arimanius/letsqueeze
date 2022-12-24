@@ -28,10 +28,11 @@ import java.util.Date
     ],
 )
 data class SelectedAnswer(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
     var queezeResultId: Int,
     var answerId: Int,
     var selectedAt: Date,
     var score: Int,
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}
