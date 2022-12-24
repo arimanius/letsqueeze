@@ -15,10 +15,6 @@ class QueezeViewModel(private val queezeRepository: QueezeRepository) : ViewMode
         queezeRepository.setCurrentQuestionIndex(value)
     }
 
-    suspend fun unsetOngoingQueeze() {
-        queezeRepository.unsetOngoingQueeze()
-    }
-
     fun submitAnswer(queezeResultId: Int, answerId: Int, score: Int) {
         if (answerId == -1) return
         CoroutineScope(Dispatchers.IO).launch {

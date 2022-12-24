@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/question_number"
+        android:id="@+id/question_result_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,7 +27,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/question_number"
+        app:layout_constraintStart_toEndOf="@id/question_result_number"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

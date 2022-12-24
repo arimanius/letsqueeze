@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import edu.arimanius.letsqueeze.R
 import edu.arimanius.letsqueeze.data.dao.QuestionWithAnswers
 import edu.arimanius.letsqueeze.databinding.FragmentQueezeBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class QueezeFragment : Fragment() {
     private lateinit var queezeViewModel: QueezeViewModel
@@ -50,7 +48,7 @@ class QueezeFragment : Fragment() {
                     index++
                     when (index) {
                         questions.size -> {
-                            finishQueeze(queezeResultId)
+                            findNavController().navigate(R.id.action_queezeFragment_to_queezeResultFragment)
                             return@setOnClickListener
                         }
                         questions.size - 1 -> {
@@ -64,13 +62,6 @@ class QueezeFragment : Fragment() {
                 }
                 updateQuestion(questions[index], queezeResultId, index)
             }
-        }
-    }
-
-    private fun finishQueeze(queezeResultId: Int) {
-        // TODO("finish queeze")
-        CoroutineScope(Dispatchers.Main).launch {
-            queezeViewModel.unsetOngoingQueeze()
         }
     }
 
@@ -114,15 +105,16 @@ class QueezeFragment : Fragment() {
             if (rbId == -1) {
                 binding.questionMessage.text = "You didn't choose anything!"
                 queezeViewModel.submitAnswer(queezeResultId, -1, 0)
-            }
-            val rb = binding.questionRadioGroup.findViewById<RadioButton>(rbId)
-            val answerId = rb.getTag(R.id.answer_id) as Int
-            if (rb.getTag(R.id.is_correct) as Boolean) {
-                binding.questionMessage.text = "Your answer is correct!"
-                queezeViewModel.submitAnswer(queezeResultId, answerId, 3)
             } else {
-                binding.questionMessage.text = "Your answer is incorrect!"
-                queezeViewModel.submitAnswer(queezeResultId, answerId, -1)
+                val rb = binding.questionRadioGroup.findViewById<RadioButton>(rbId)
+                val answerId = rb.getTag(R.id.answer_id) as Int
+                if (rb.getTag(R.id.is_correct) as Boolean) {
+                    binding.questionMessage.text = "Your answer is correct!"
+                    queezeViewModel.submitAnswer(queezeResultId, answerId, 3)
+                } else {
+                    binding.questionMessage.text = "Your answer is incorrect!"
+                    queezeViewModel.submitAnswer(queezeResultId, answerId, -1)
+                }
             }
 
             binding.nextButton.isEnabled = true

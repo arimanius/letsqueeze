@@ -89,10 +89,6 @@ class QueezeRepository(
         return result
     }
 
-    suspend fun unsetOngoingQueeze() {
-        appPropertyDao.unset(ONGOING_QUEEZE_RESULT_ID_KEY)
-    }
-
     fun setCurrentQuestionIndex(index: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             appPropertyDao.set(
