@@ -110,6 +110,6 @@ class QueezeRepository(
 
     suspend fun updateScores(queezeResultId: Int, score: Int) {
         userDao.updateScore(score)
-        queezeResultDao.updateScore(score, score)
+        queezeResultDao.updateScore(queezeResultId, score)
     }
 }

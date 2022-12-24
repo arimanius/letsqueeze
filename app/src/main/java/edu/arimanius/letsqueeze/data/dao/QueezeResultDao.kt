@@ -11,7 +11,7 @@ interface QueezeResultDao: InsertableDao<QueezeResult> {
                 "SET score = queeze_results.score + :change " +
                 "WHERE id = :id"
     )
-    suspend fun updateScore(change: Int, id: Int)
+    suspend fun updateScore(id: Int, change: Int)
 
     @Query("SELECT * FROM queeze_results WHERE id = :id")
     suspend fun getQueezeResultById(id: Int): QueezeResult
