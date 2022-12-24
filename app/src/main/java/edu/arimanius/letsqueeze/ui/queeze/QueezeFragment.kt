@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -104,15 +105,33 @@ class QueezeFragment : Fragment() {
             val rbId = binding.questionRadioGroup.checkedRadioButtonId
             if (rbId == -1) {
                 binding.questionMessage.text = "You didn't choose anything!"
+                binding.questionMessage.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.blue
+                    )
+                )
                 queezeViewModel.submitAnswer(queezeResultId, -1, 0)
             } else {
                 val rb = binding.questionRadioGroup.findViewById<RadioButton>(rbId)
                 val answerId = rb.getTag(R.id.answer_id) as Int
                 if (rb.getTag(R.id.is_correct) as Boolean) {
                     binding.questionMessage.text = "Your answer is correct!"
+                    binding.questionMessage.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.green
+                        )
+                    )
                     queezeViewModel.submitAnswer(queezeResultId, answerId, 3)
                 } else {
                     binding.questionMessage.text = "Your answer is incorrect!"
+                    binding.questionMessage.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.red
+                        )
+                    )
                     queezeViewModel.submitAnswer(queezeResultId, answerId, -1)
                 }
             }
