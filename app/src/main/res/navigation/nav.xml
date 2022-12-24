@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/queezeFragment"
-        android:name="edu.arimanius.letsqueeze.QueezeFragment"
+        android:name="edu.arimanius.letsqueeze.ui.queeze.QueezeFragment"
         android:label="fragment_queeze"
         tools:layout="@layout/fragment_queeze" >
         <action
