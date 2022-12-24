@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import edu.arimanius.letsqueeze.R
 import edu.arimanius.letsqueeze.data.dao.QuestionWithAnswers
+import edu.arimanius.letsqueeze.data.entity.Difficulty
 import edu.arimanius.letsqueeze.databinding.FragmentQueezeBinding
 
 class QueezeFragment : Fragment() {
@@ -77,6 +78,11 @@ class QueezeFragment : Fragment() {
         queezeResultId: Int,
         index: Int
     ) {
+        val scoreCoef = when(currentQuestion.question.difficulty) {
+            Difficulty.EASY -> 1
+            Difficulty.MEDIUM -> 2
+            Difficulty.HARD -> 3
+        }
         binding.questionNumber.text = "${index + 1}."
         binding.questionContent.text = currentQuestion.question.content
 
@@ -111,7 +117,7 @@ class QueezeFragment : Fragment() {
                         R.color.blue
                     )
                 )
-                queezeViewModel.submitAnswer(queezeResultId, -1, 0)
+                queezeViewModel.submitAnswer(queezeResultId, -1, 0 * scoreCoef)
             } else {
                 val rb = binding.questionRadioGroup.findViewById<RadioButton>(rbId)
                 val answerId = rb.getTag(R.id.answer_id) as Int
@@ -123,7 +129,7 @@ class QueezeFragment : Fragment() {
                             R.color.green
                         )
                     )
-                    queezeViewModel.submitAnswer(queezeResultId, answerId, 3)
+                    queezeViewModel.submitAnswer(queezeResultId, answerId, 3 * scoreCoef)
                 } else {
                     binding.questionMessage.text = "Your answer is incorrect!"
                     binding.questionMessage.setTextColor(
@@ -132,7 +138,7 @@ class QueezeFragment : Fragment() {
                             R.color.red
                         )
                     )
-                    queezeViewModel.submitAnswer(queezeResultId, answerId, -1)
+                    queezeViewModel.submitAnswer(queezeResultId, answerId, -1 * scoreCoef)
                 }
             }
 
