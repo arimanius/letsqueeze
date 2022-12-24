@@ -11,13 +11,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import edu.arimanius.letsqueeze.data.LetsQueezeDatabase
 import edu.arimanius.letsqueeze.data.entity.Theme
+import edu.arimanius.letsqueeze.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     var isHome = false
+    lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
