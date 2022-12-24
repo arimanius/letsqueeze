@@ -6,7 +6,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     var isHome = false
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_register -> navController.navigate(R.id.action_homeFragment_to_registerFragment)
                 else -> return@setNavigationItemSelectedListener false
             }
+            drawerLayout.closeDrawers()
             return@setNavigationItemSelectedListener true
         }
     }
