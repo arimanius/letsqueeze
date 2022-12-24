@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.arimanius.letsqueeze.R
-import edu.arimanius.letsqueeze.databinding.FragmentQueezeBinding
 import edu.arimanius.letsqueeze.databinding.FragmentQueezeResultBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class QueezeResultFragment : Fragment() {
 
@@ -20,17 +22,26 @@ class QueezeResultFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentQueezeResultBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val queezeResultViewModel = ViewModelProvider(
+            this,
+            QueezeResultViewModelFactory(requireContext())
+        )[QueezeResultViewModel::class.java]
 
-        val adapter = QuestionListAdapter(requireContext())
-        val recyclerView = view.findViewById<RecyclerView>(R.id.queeze_result_list)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        CoroutineScope(Dispatchers.Main).launch {
+            val questionWithAnswers = queezeResultViewModel.getOngoingQuestionsWithAnswers()
+            val selectedAnswers = queezeResultViewModel.getOngoingSelectedAnswers()
+            queezeResultViewModel.unsetOngoingQueezeId()
+            val adapter = QuestionListAdapter(requireContext(), questionWithAnswers, selectedAnswers)
+            val recyclerView = view.findViewById<RecyclerView>(R.id.queeze_result_list)
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 }

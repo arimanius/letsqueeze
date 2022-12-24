@@ -4,13 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import edu.arimanius.letsqueeze.R
 import edu.arimanius.letsqueeze.data.dao.QuestionWithAnswers
-import edu.arimanius.letsqueeze.data.entity.Answer
 import edu.arimanius.letsqueeze.data.entity.SelectedAnswer
 
 
@@ -30,8 +28,8 @@ class QuestionListAdapter(
 
     override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
         val currentQuestion = questionList[position]
-        holder.itemView.findViewById<TextView>(R.id.question_number).text = "${position + 1}."
-        holder.itemView.findViewById<TextView>(R.id.question_content).text =
+        holder.itemView.findViewById<TextView>(R.id.question_result_number).text = "${position + 1}."
+        holder.itemView.findViewById<TextView>(R.id.question_result_content).text =
             currentQuestion.question.content
 
         val answerViews = listOf<TextView>(
