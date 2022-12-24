@@ -114,15 +114,16 @@ class QueezeFragment : Fragment() {
             if (rbId == -1) {
                 binding.questionMessage.text = "You didn't choose anything!"
                 queezeViewModel.submitAnswer(queezeResultId, -1, 0)
-            }
-            val rb = binding.questionRadioGroup.findViewById<RadioButton>(rbId)
-            val answerId = rb.getTag(R.id.answer_id) as Int
-            if (rb.getTag(R.id.is_correct) as Boolean) {
-                binding.questionMessage.text = "Your answer is correct!"
-                queezeViewModel.submitAnswer(queezeResultId, answerId, 3)
             } else {
-                binding.questionMessage.text = "Your answer is incorrect!"
-                queezeViewModel.submitAnswer(queezeResultId, answerId, -1)
+                val rb = binding.questionRadioGroup.findViewById<RadioButton>(rbId)
+                val answerId = rb.getTag(R.id.answer_id) as Int
+                if (rb.getTag(R.id.is_correct) as Boolean) {
+                    binding.questionMessage.text = "Your answer is correct!"
+                    queezeViewModel.submitAnswer(queezeResultId, answerId, 3)
+                } else {
+                    binding.questionMessage.text = "Your answer is incorrect!"
+                    queezeViewModel.submitAnswer(queezeResultId, answerId, -1)
+                }
             }
 
             binding.nextButton.isEnabled = true
