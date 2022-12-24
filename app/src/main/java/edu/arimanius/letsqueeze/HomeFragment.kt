@@ -31,6 +31,16 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        (activity as MainActivity).isHome = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as MainActivity).isHome = false
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
