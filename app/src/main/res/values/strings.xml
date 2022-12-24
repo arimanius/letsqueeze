@@ -29,4 +29,6 @@
     <string name="_0">0</string>
     <string name="invalid_phone_number">Invalid phone number</string>
     <string name="invalid_display_name">Display name should not be empty</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         }
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         val actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, drawerLayout, R.string.action_save, R.string.action_save)
+            ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(item)
