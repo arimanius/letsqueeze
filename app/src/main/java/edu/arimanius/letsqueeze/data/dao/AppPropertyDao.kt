@@ -1,5 +1,6 @@
 package edu.arimanius.letsqueeze.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,6 +14,9 @@ interface AppPropertyDao {
 
     @Query("SELECT value FROM app_properties WHERE `key` = :key")
     suspend fun get(key: String): String?
+
+    @Query("SELECT value FROM app_properties WHERE `key` = :key")
+    fun getLive(key: String): LiveData<String>
 
     @Query("DELETE FROM app_properties WHERE `key` = :key")
     suspend fun unset(key: String)

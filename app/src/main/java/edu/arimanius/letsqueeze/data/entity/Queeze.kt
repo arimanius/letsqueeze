@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.util.Date
 
 @Entity(
     tableName = "queezes",
@@ -24,4 +25,5 @@ data class Queeze(
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+    var createdAt: Date = Date()
 }

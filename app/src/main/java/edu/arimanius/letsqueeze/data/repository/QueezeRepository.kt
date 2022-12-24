@@ -8,7 +8,7 @@ import edu.arimanius.letsqueeze.data.http.OpenTDBClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import retrofit2.HttpException
 import retrofit2.await
 import java.util.*
 
@@ -27,35 +27,58 @@ class QueezeRepository(
         val result = MutableLiveData<Pair<Int, List<QuestionWithAnswers>>>()
         CoroutineScope(Dispatchers.Main).launch {
             val setting = settingDao.getAsync()
-            val response = OpenTDBClient.getClient().getService().getQuestions(
-                setting.numQuestion,
-                setting.categoryId,
-                setting.difficulty.name.lowercase()
-            ).await()
-
             val loggedInUser = userDao.getLoggedInUserAsync()
-            val queezeId = queezeDao.insert(Queeze(loggedInUser.id)).toInt()
+            var queezeId: Int
+            val queezeResultId: Int
+            val ongoingQueezeResultId = appPropertyDao.get(ONGOING_QUEEZE_RESULT_ID_KEY)
+            if (ongoingQueezeResultId != null) {
+                queezeId =
+                    queezeResultDao.getQueezeResultById(ongoingQueezeResultId.toInt()).queezeId
+                queezeResultId = ongoingQueezeResultId.toInt()
+            } else {
+                try {
+                    val response = OpenTDBClient.getClient().getService().getQuestions(
+                        setting.numQuestion,
+                        setting.categoryId,
+                        setting.difficulty.name.lowercase()
+                    ).await()
 
-            response.results.forEach {
-                val question = Question(
-                    queezeId,
-                    setting.categoryId,
-                    Difficulty.fromString(it.difficulty),
-                    it.question
+                    queezeId = queezeDao.insert(Queeze(loggedInUser.id)).toInt()
+
+                    response.results.forEach {
+                        val question = Question(
+                            queezeId,
+                            setting.categoryId,
+                            Difficulty.fromString(it.difficulty),
+                            it.question
+                        )
+                        val questionId = questionDao.insert(question).toInt()
+
+                        val correctAnswer = Answer(questionId, it.correctAnswer, true)
+                        answerDao.insert(correctAnswer)
+
+                        it.incorrectAnswers
+                            .map { ans -> Answer(questionId, ans, false) }
+                            .forEach { ans -> answerDao.insert(ans) }
+                    }
+                } catch (e: HttpException) {
+                    val queeze = queezeDao.getRandomQueeze(
+                        loggedInUser.id,
+                        System.currentTimeMillis() - 5 * 24 * 60 * 60 * 1000,
+                        System.currentTimeMillis()
+                    )
+                    queezeId = queeze.id
+                }
+
+                queezeResultId = queezeResultDao.insert(QueezeResult(queezeId, Date(), 0)).toInt()
+                appPropertyDao.set(
+                    AppProperty(
+                        ONGOING_QUEEZE_RESULT_ID_KEY,
+                        queezeResultId.toString()
+                    )
                 )
-                val questionId = questionDao.insert(question).toInt()
-
-                val correctAnswer = Answer(questionId, it.correctAnswer, true)
-                answerDao.insert(correctAnswer)
-
-                it.incorrectAnswers
-                    .map { ans -> Answer(questionId, ans, false) }
-                    .forEach { ans -> answerDao.insert(ans) }
+                appPropertyDao.set(AppProperty(ONGOING_SQUEEZE_CURRENT_QUESTION_INDEX_KEY, "0"))
             }
-
-            val queezeResultId =
-                queezeResultDao.insert(QueezeResult(queezeId, Date(), 0)).toInt()
-
             result.postValue(
                 Pair(
                     queezeResultId,
@@ -64,6 +87,25 @@ class QueezeRepository(
             )
         }
         return result
+    }
+
+    suspend fun unsetOngoingQueeze() {
+        appPropertyDao.unset(ONGOING_QUEEZE_RESULT_ID_KEY)
+    }
+
+    fun setCurrentQuestionIndex(index: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            appPropertyDao.set(
+                AppProperty(
+                    ONGOING_SQUEEZE_CURRENT_QUESTION_INDEX_KEY,
+                    index.toString()
+                )
+            )
+        }
+    }
+
+    fun getCurrentQuestionIndex(): LiveData<String> {
+        return appPropertyDao.getLive(ONGOING_SQUEEZE_CURRENT_QUESTION_INDEX_KEY)
     }
 
     suspend fun selectAnswer(queezeResultId: Int, answerId: Int, score: Int) {
