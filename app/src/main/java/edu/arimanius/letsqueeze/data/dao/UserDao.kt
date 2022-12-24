@@ -51,4 +51,14 @@ interface UserDao : InsertableDao<User> {
                 ")"
     )
     suspend fun updateProfile(username: String, displayName: String, phoneNumber: String)
+
+    @Query(
+        "UPDATE users " +
+                "SET score = users.score + :change " +
+                "WHERE id = (" +
+                "SELECT value FROM app_properties " +
+                "WHERE `key` = \"$LOGGED_IN_USER_KEY\"" +
+                ")"
+    )
+    suspend fun updateScore(change: Int)
 }

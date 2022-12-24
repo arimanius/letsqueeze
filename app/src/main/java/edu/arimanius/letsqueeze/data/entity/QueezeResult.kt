@@ -8,9 +8,10 @@ import java.util.Date
     tableName = "queeze_results",
 )
 data class QueezeResult(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
     var queezeId: Int,
     var takenAt: Date,
     var score: Int,
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}

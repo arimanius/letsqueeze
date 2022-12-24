@@ -15,7 +15,9 @@ class QueezeViewModelFactory(private val context: Context) : ViewModelProvider.F
                 queezeRepository = QueezeRepository(
                     LetsQueezeDatabase.getInstance(context).questionDao(),
                     LetsQueezeDatabase.getInstance(context).answerDao(),
+                    LetsQueezeDatabase.getInstance(context).selectedAnswerDao(),
                     LetsQueezeDatabase.getInstance(context).queezeDao(),
+                    LetsQueezeDatabase.getInstance(context).queezeResultDao(),
                     LetsQueezeDatabase.getInstance(context).userDao(),
                     LetsQueezeDatabase.getInstance(context).settingDao(),
                     LetsQueezeDatabase.getInstance(context).appPropertyDao(),
