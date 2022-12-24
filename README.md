@@ -12,17 +12,31 @@ This application offers general knowledge quizes in form of a game that keeps sc
 It consists of following pages:
 
 - Home
-<!-- todo -->
+
+![ home](./images/home.jpg "home page")
+
 - Login
-<!-- todo -->
+
+![ login](./images/login.jpg "login page")
+
 - Register
-<!-- todo -->
+
+![ register](./images/register.jpg "register page")
+
 - Setting
-<!-- todo -->
+
+![ setting](./images/setting.jpg "setting page")
 - Profile
-<!-- todo -->
+
+![ profile](./images/profile.jpg "profile page")
+
 - Scoreboard
-<!-- todo -->
+
+![ scoreboard](./images/scoreboard.jpg "scoreboard page")
+
+- Game
+
+![ game](./images/game.jpg "game page")
 
 ## Technology
 
