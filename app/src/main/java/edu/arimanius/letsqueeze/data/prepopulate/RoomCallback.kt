@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import edu.arimanius.letsqueeze.data.LetsQueezeDatabase
+import edu.arimanius.letsqueeze.data.entity.Category
 import edu.arimanius.letsqueeze.data.entity.Setting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,9 +17,11 @@ class RoomCallback(private val context: Context) : RoomDatabase.Callback() {
         val database = LetsQueezeDatabase.getInstance(context)
 
         CoroutineScope(Dispatchers.IO).launch {
+            val defaultCategory = Category(9, "General Knowledge")
+            database.categoryDao().insert(defaultCategory)
             val settingDao = database.settingDao()
             if (!settingDao.exists()) {
-                settingDao.insert(Setting())
+                settingDao.insert(Setting(categoryId = defaultCategory.id))
             }
         }
     }
