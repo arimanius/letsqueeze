@@ -23,6 +23,9 @@ interface UserDao : InsertableDao<User> {
     )
     fun getLoggedInUser(): LiveData<User>
 
+    @Query("SELECT * FROM users")
+    fun getUsers(): LiveData<List<User>>
+
     @Query(
         "SELECT user.* " +
                 "FROM app_properties prop " +

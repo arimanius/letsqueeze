@@ -2,13 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_profile"
-        android:title="Profile" />
+        android:title="@string/navitem_profile" />
 
     <item
         android:id="@+id/nav_logout"
-        android:title="Logout" />
+        android:title="@string/navitem_logout" />
 
     <item
-        android:id="@+id/nav_settings_logged_in"
-        android:title="Settings" />
+        android:id="@+id/nav_settings"
+        android:title="@string/navitem_settings" />
+
+    <item
+        android:id="@+id/nav_scoreboard"
+        android:title="@string/navitem_scoreboard" />
 </menu>
