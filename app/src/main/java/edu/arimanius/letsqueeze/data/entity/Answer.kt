@@ -20,9 +20,10 @@ import androidx.room.PrimaryKey
     ]
 )
 data class Answer(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
     var questionId: Int,
     var content: String,
     var correct: Boolean,
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}

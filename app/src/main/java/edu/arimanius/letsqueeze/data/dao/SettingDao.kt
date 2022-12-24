@@ -15,6 +15,9 @@ interface SettingDao : InsertableDao<Setting> {
     @Query("SELECT * FROM settings")
     fun get(): LiveData<Setting>
 
+    @Query("SELECT * FROM settings")
+    suspend fun getAsync(): Setting
+
     @Query("SELECT EXISTS(SELECT * FROM settings)")
     suspend fun exists(): Boolean
 }

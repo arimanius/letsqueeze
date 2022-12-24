@@ -2,12 +2,16 @@ package edu.arimanius.letsqueeze.data.dao
 
 import androidx.room.Dao
 import androidx.room.Embedded
+import androidx.room.Query
 import androidx.room.Relation
 import edu.arimanius.letsqueeze.data.entity.Answer
 import edu.arimanius.letsqueeze.data.entity.Question
 
 @Dao
-interface QuestionDao : InsertableDao<Question>
+interface QuestionDao : InsertableDao<Question>{
+    @Query("SELECT * FROM questions WHERE queezeId = :queezeId")
+    suspend fun getQuestionsByQueezeId(queezeId : Int): List<QuestionWithAnswers>
+}
 
 data class QuestionWithAnswers(
     @Embedded val question: Question,

@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
     foreignKeys = [
         ForeignKey(
             entity = User::class,
-            parentColumns = ["username"],
-            childColumns = ["username"],
+            parentColumns = ["id"],
+            childColumns = ["userId"],
             onDelete = ForeignKey.CASCADE,
         ),
     ],
@@ -20,7 +20,8 @@ import androidx.room.PrimaryKey
     ]
 )
 data class Queeze(
+    var userId: Int,
+) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
-    var username: String,
-)
+    var id: Int = 0
+}

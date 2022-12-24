@@ -24,6 +24,15 @@ interface UserDao : InsertableDao<User> {
     fun getLoggedInUser(): LiveData<User>
 
     @Query(
+        "SELECT user.* " +
+                "FROM app_properties prop " +
+                "INNER JOIN users user " +
+                "ON prop.value = user.id " +
+                "WHERE prop.`key` = \"$LOGGED_IN_USER_KEY\""
+    )
+    suspend fun getLoggedInUserAsync(): User
+
+    @Query(
         "SELECT EXISTS(" +
                 "SELECT * FROM users " +
                 "WHERE username = :username " +

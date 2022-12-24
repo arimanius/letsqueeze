@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import edu.arimanius.letsqueeze.R
 import edu.arimanius.letsqueeze.databinding.FragmentQueezeBinding
 
 class QueezeFragment : Fragment() {

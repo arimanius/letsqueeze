@@ -28,13 +28,14 @@ import java.util.Locale
     ]
 )
 data class Question(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
     var queezeId: Int,
     var categoryId: Int,
     var difficulty: Difficulty,
     var content: String,
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}
 
 enum class Difficulty {
     EASY,
