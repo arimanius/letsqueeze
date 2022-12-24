@@ -38,10 +38,11 @@ class QuestionListAdapter(val context: Context) :
         ).forEachIndexed { index, radioButton ->
             radioButton.text = currentAnswers[index].content
             if (index == correctIndex) {
-                radioButton.tag = "correct"
+                radioButton.setTag(0, true)
             } else {
-                radioButton.tag = "incorrect"
+                radioButton.setTag(0, false)
             }
+            radioButton.setTag(1, currentAnswers[index].id)
         }
 
     }

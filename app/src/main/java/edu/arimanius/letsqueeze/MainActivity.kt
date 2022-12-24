@@ -77,9 +77,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_logout -> {
                     CoroutineScope(Dispatchers.IO).launch { userRepository.logout() }
                 }
-                R.id.nav_settings_initial, R.id.nav_settings_logged_in -> navController.navigate(R.id.action_homeFragment_to_settingFragment)
+                R.id.nav_settings -> navController.navigate(R.id.action_homeFragment_to_settingFragment)
                 R.id.nav_login -> navController.navigate(R.id.action_homeFragment_to_loginFragment)
                 R.id.nav_register -> navController.navigate(R.id.action_homeFragment_to_registerFragment)
+                R.id.nav_scoreboard -> navController.navigate(R.id.action_homeFragment_to_scoreboardFragment)
                 else -> return@setNavigationItemSelectedListener false
             }
             drawerLayout.closeDrawers()
