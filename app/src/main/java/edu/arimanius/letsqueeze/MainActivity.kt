@@ -6,16 +6,21 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import edu.arimanius.letsqueeze.data.LetsQueezeDatabase
 import edu.arimanius.letsqueeze.data.entity.Theme
+import edu.arimanius.letsqueeze.data.repository.UserRepository
 import edu.arimanius.letsqueeze.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     var isHome = false
-    lateinit var binding : ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +56,34 @@ class MainActivity : AppCompatActivity() {
                     Theme.SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 }
             )
+        }
+
+        val loggedInUser = LetsQueezeDatabase.getInstance(application).userDao().getLoggedInUser()
+        loggedInUser.observe(this) {
+            binding.navView.menu.clear()
+            if (it == null) {
+                binding.navView.inflateMenu(R.menu.initial_menu)
+            } else {
+                binding.navView.inflateMenu(R.menu.logged_in_menu)
+            }
+        }
+
+        binding.navView.setNavigationItemSelectedListener {
+            val userRepository = UserRepository(
+                LetsQueezeDatabase.getInstance(application).appPropertyDao(),
+                LetsQueezeDatabase.getInstance(application).userDao()
+            )
+            when (it.itemId) {
+                R.id.nav_profile -> navController.navigate(R.id.action_homeFragment_to_profileFragment)
+                R.id.nav_logout -> {
+                    CoroutineScope(Dispatchers.IO).launch { userRepository.logout() }
+                }
+                R.id.nav_settings_initial, R.id.nav_settings_logged_in -> navController.navigate(R.id.action_homeFragment_to_settingFragment)
+                R.id.nav_login -> navController.navigate(R.id.action_homeFragment_to_loginFragment)
+                R.id.nav_register -> navController.navigate(R.id.action_homeFragment_to_registerFragment)
+                else -> return@setNavigationItemSelectedListener false
+            }
+            return@setNavigationItemSelectedListener true
         }
     }
 
