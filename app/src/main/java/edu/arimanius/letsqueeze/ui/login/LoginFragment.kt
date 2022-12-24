@@ -63,18 +63,17 @@ class LoginFragment : Fragment() {
                 }
             })
 
-        loginViewModel.loginResult.observe(viewLifecycleOwner,
-            Observer { loginResult ->
-                loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
-                loginResult.error?.let {
-                    showLoginFailed(it)
-                }
-                loginResult.success?.let {
-                    updateUiWithUser(it)
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                }
-            })
+        loginViewModel.loginResult.observe(viewLifecycleOwner) { loginResult ->
+            loginResult ?: return@observe
+            loadingProgressBar.visibility = View.GONE
+            loginResult.error?.let {
+                showLoginFailed(it)
+            }
+            loginResult.success?.let {
+                updateUiWithUser(it)
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            }
+        }
 
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

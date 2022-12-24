@@ -92,7 +92,8 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        navController.navigate(R.id.homeFragment)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
