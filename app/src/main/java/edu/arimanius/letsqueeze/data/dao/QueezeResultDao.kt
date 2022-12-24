@@ -2,7 +2,6 @@ package edu.arimanius.letsqueeze.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import edu.arimanius.letsqueeze.data.entity.LOGGED_IN_USER_KEY
 import edu.arimanius.letsqueeze.data.entity.QueezeResult
 
 @Dao
@@ -13,4 +12,7 @@ interface QueezeResultDao: InsertableDao<QueezeResult> {
                 "WHERE id = :id"
     )
     suspend fun updateScore(change: Int, id: Int)
+
+    @Query("SELECT * FROM queeze_results WHERE id = :id")
+    suspend fun getQueezeResultById(id: Int): QueezeResult
 }

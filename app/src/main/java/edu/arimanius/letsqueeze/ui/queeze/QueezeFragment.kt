@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import edu.arimanius.letsqueeze.R
 import edu.arimanius.letsqueeze.data.dao.QuestionWithAnswers
 import edu.arimanius.letsqueeze.databinding.FragmentQueezeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class QueezeFragment : Fragment() {
     private lateinit var queezeViewModel: QueezeViewModel
@@ -34,27 +37,40 @@ class QueezeFragment : Fragment() {
         )[QueezeViewModel::class.java]
 
         queezeViewModel.queeze.observe(viewLifecycleOwner) { (queezeResultId, questions) ->
-            var index = queezeViewModel.currentQuestionIndex
-            binding.nextButton.setOnClickListener {
-                binding.questionMessage.text = ""
-                binding.nextButton.isEnabled = false
-                binding.submitButton.isEnabled = true
-                binding.questionRadioGroup.clearCheck()
-                binding.questionRadioGroup.children.forEach { it.isEnabled = true }
+            queezeViewModel.currentQuestionIndex.observe(viewLifecycleOwner) {
+                it ?: return@observe
+                var index = it.toInt()
+                binding.nextButton.setOnClickListener {
+                    binding.questionMessage.text = ""
+                    binding.nextButton.isEnabled = false
+                    binding.submitButton.isEnabled = true
+                    binding.questionRadioGroup.clearCheck()
+                    binding.questionRadioGroup.children.forEach { it.isEnabled = true }
 
-                index++
-                if (index == questions.size) {
-                    // TODO("finish queeze")
-                    return@setOnClickListener
-                } else if (index == questions.size - 1) {
-                    binding.nextButton.text = "Finish"
-                } else {
-                    binding.nextButton.text = "Next"
+                    index++
+                    when (index) {
+                        questions.size -> {
+                            finishQueeze(queezeResultId)
+                            return@setOnClickListener
+                        }
+                        questions.size - 1 -> {
+                            binding.nextButton.text = "Finish"
+                        }
+                        else -> {
+                            binding.nextButton.text = "Next"
+                        }
+                    }
+                    queezeViewModel.setCurrentQuestionIndex(index)
                 }
                 updateQuestion(questions[index], queezeResultId, index)
-                queezeViewModel.currentQuestionIndex = index
             }
-            updateQuestion(questions[index], queezeResultId, index)
+        }
+    }
+
+    private fun finishQueeze(queezeResultId: Int) {
+        // TODO("finish queeze")
+        CoroutineScope(Dispatchers.Main).launch {
+            queezeViewModel.unsetOngoingQueeze()
         }
     }
 
