@@ -8,6 +8,7 @@ import edu.arimanius.letsqueeze.data.http.OpenTDBClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.apache.commons.text.StringEscapeUtils
 import retrofit2.HttpException
 import retrofit2.await
 import java.util.*
@@ -50,15 +51,25 @@ class QueezeRepository(
                             queezeId,
                             setting.categoryId,
                             Difficulty.fromString(it.difficulty),
-                            it.question
+                            StringEscapeUtils.unescapeHtml4(it.question)
                         )
                         val questionId = questionDao.insert(question).toInt()
 
-                        val correctAnswer = Answer(questionId, it.correctAnswer, true)
+                        val correctAnswer = Answer(
+                            questionId,
+                            StringEscapeUtils.unescapeHtml4(it.correctAnswer),
+                            true
+                        )
                         answerDao.insert(correctAnswer)
 
                         it.incorrectAnswers
-                            .map { ans -> Answer(questionId, ans, false) }
+                            .map { ans ->
+                                Answer(
+                                    questionId,
+                                    StringEscapeUtils.unescapeHtml4(ans),
+                                    false
+                                )
+                            }
                             .forEach { ans -> answerDao.insert(ans) }
                     }
                 } catch (e: HttpException) {

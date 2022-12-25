@@ -81,4 +81,7 @@ dependencies {
 
     // Hashing components
     implementation "org.mindrot:jbcrypt:0.4"
+
+    // Text utils
+    implementation "org.apache.commons:commons-text:1.10.0"
 }

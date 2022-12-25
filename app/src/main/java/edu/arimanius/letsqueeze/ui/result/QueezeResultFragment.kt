@@ -35,10 +35,16 @@ class QueezeResultFragment : Fragment() {
         )[QueezeResultViewModel::class.java]
 
         CoroutineScope(Dispatchers.Main).launch {
+            val queezeResult = queezeResultViewModel.getOngoingQueezeResult()
+            val isTheBest = queezeResultViewModel.isOngoingTheBest()
+            binding.score.text =
+                queezeResult.score.toString() + if (isTheBest) " (Best Ever)" else ""
+
             val questionWithAnswers = queezeResultViewModel.getOngoingQuestionsWithAnswers()
             val selectedAnswers = queezeResultViewModel.getOngoingSelectedAnswers()
             queezeResultViewModel.unsetOngoingQueezeId()
-            val adapter = QuestionListAdapter(requireContext(), questionWithAnswers, selectedAnswers)
+            val adapter =
+                QuestionListAdapter(requireContext(), questionWithAnswers, selectedAnswers)
             val recyclerView = view.findViewById<RecyclerView>(R.id.queeze_result_list)
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(requireContext())

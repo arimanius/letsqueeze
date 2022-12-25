@@ -117,7 +117,7 @@ class QueezeFragment : Fragment() {
                         R.color.blue
                     )
                 )
-                queezeViewModel.submitAnswer(queezeResultId, -1, 0 * scoreCoef)
+                queezeViewModel.submitAnswer(queezeResultId, -1, 0)
             } else {
                 val rb = binding.questionRadioGroup.findViewById<RadioButton>(rbId)
                 val answerId = rb.getTag(R.id.answer_id) as Int

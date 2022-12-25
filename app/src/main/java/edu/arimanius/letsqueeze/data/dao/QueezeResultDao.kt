@@ -15,4 +15,8 @@ interface QueezeResultDao: InsertableDao<QueezeResult> {
 
     @Query("SELECT * FROM queeze_results WHERE id = :id")
     suspend fun getQueezeResultById(id: Int): QueezeResult
+
+    @Query("SELECT id FROM queeze_results " +
+            "ORDER BY score DESC LIMIT 1")
+    suspend fun getBestResultId(): Int
 }

@@ -32,7 +32,6 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="login_prompt">You need to login first :)</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navitem_login">Login</string>
     <string name="navitem_register">Register</string>
@@ -40,4 +39,6 @@
     <string name="navitem_scoreboard">Scoreboard</string>
     <string name="navitem_profile">Profile</string>
     <string name="navitem_logout">Logout</string>
+    <string name="queeze_finished_your_score">Queeze Finished! Your Score:</string>
+    <string name="not_specified">Not Specified</string>
 </resources>

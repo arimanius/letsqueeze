@@ -11,4 +11,8 @@ class QueezeResultViewModel(private val queezeResultRepository: QueezeResultRepo
         queezeResultRepository.getOngoingSelectedAnswers()
 
     suspend fun unsetOngoingQueezeId() = queezeResultRepository.unsetOngoingQueezeId()
+
+    suspend fun getOngoingQueezeResult() = queezeResultRepository.getOngoingQueezeResult()
+
+    suspend fun isOngoingTheBest() = queezeResultRepository.isOngoingTheBest()
 }
