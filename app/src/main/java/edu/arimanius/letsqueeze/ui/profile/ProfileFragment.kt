@@ -40,6 +40,7 @@ class ProfileFragment : Fragment() {
         val usernameEditText = binding.username
         val displayNameEditText = binding.displayName
         val phoneNumberEditText = binding.phoneNumber
+        val scoreTextView = binding.score
         val saveButton = binding.save
         val loadingProgressBar = binding.loading
 
@@ -47,6 +48,7 @@ class ProfileFragment : Fragment() {
             usernameEditText.setText(it.username)
             displayNameEditText.setText(it.displayName)
             phoneNumberEditText.setText(it.phoneNumber)
+            scoreTextView.text = it.score.toString()
         }
 
         profileViewModel.profileFormState.observe(viewLifecycleOwner) {
